@@ -5,6 +5,7 @@
 - conditions used must evaluate to True or False
 - body of while loop must include a change in condition, otherwise may run into infinite loop
 - ping command used in Linux uses infinite loop internally to send packets, CTRL + C will exit the loop
+- useful when an action is repeated until a condition changes
 
 ### Terminology
 - __Initializing__: to give an initial value to a variable
