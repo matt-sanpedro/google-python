@@ -21,10 +21,10 @@
 - body of loop modifies the variables used in the condition, loop eventually ends for all possible values of the variables
 - preventing an infinite loop includes:
     * use the __break__ keyword
-    * adding end criteria to codition part of the while loop
+    * adding end criteria to condition part of the while loop
 
 ### Math Concepts
-- __prime numbers__: integers that have only twwo factors, which are the number itself multiplied by 1, lowest prime number is 2
+- __prime numbers__: integers that have only two factors, which are the number itself multiplied by 1, lowest prime number is 2
 - __prime factors__: prime numbers that are factors of an integer
     * the prime numbers 2 and 5 are the prime factors of the number 10 (2 x 5 = 10)
     * prime factors of an integer will not produce a remainder when used to divide that integer
