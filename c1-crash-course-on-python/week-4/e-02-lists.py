@@ -80,3 +80,76 @@ print(odd_numbers(10)) # Should print [1, 3, 5, 7, 9]
 print(odd_numbers(11)) # Should print [1, 3, 5, 7, 9, 11]
 print(odd_numbers(1))  # Should print [1]
 print(odd_numbers(-1)) # Should print []
+
+# list comprehension exercise
+'''
+This exercise will walk you through how to write a list comprehension to create a list of squared numbers (n*n). It needs to return a list of squares of consecutive numbers between “start” and “end” inclusively. For example, squares(2, 3) should return a list containing [4, 9].
+
+1. The function receives the variables “start” and “end” through the function parameters. 
+2. In the return line, start by entering the list brackets [ ]
+3. Between the brackets [ ], enter the arithmetic expression to square a variable “n”. 
+4. To the right of the square expression, write a for loop that iterates over “n” in a range from the “start” to “end” variables.
+5. Ensure the “end” range value is included in the range() by adding 1 to it.
+'''
+def squares(start, end):
+    return [x**2 for x in range(start, end+1)] 
+
+
+print(squares(2, 3))  # Should print [4, 9]
+print(squares(1, 5))  # Should print [1, 4, 9, 16, 25]
+print(squares(0, 10)) # Should print [0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+
+
+# This block of code also changes the year on a list of dates using a
+# different approach than demonstrated in Skill Group 1. By using a 
+# list comprehension, you can see how it is possible to refactor the
+# code to a shorter, more efficient code block. 
+
+# The "years" list is given with existing elements.
+years = ["January 2023", "May 2025", "April 2023", "August 2024", "September 2025", "December 2023"]
+
+# The list comprehension below creates a new list "updated_years" to
+# hold the command to replace the "2023" substring of the "year"
+# element with the substring "2024". This action will be executed if
+# the last 4 indices of the "year" string is equal to the substring
+# "2023". If false (else), the "year" element will be included in the
+# new list "updated_years" unchanged.
+updated_years = [year.replace("2023","2024") if year[-4:] == "2023" else year for year in years]
+
+
+print(updated_years) 
+# Should print ["January 2024", "May 2025", "April 2024", "August 2024", "September 2025", "December 2024"]
+
+
+# This function splits a given string into a list of elements. Then, it
+# modifies each element by moving the first character to the end of the 
+# element and adds a dash between the element and the moved character. 
+# For example, the element "2two" will be changed to "two-2". Finally,
+# the function converts the list back to a string, and returns the
+# new string.
+def change_string(given_string):
+
+# Initialize "new_string" as a string data type by using empty quotes.
+    new_string = ""
+    # Split the "given_string" into a "new_list", with each "element"
+    # holding an individual word from the string.
+    new_list = given_string.split()
+
+    # The for loop iterates over each "element" in the "new_list".
+    for element in new_list:
+
+        # Convert the list into a "new_string" by using the assignment
+        # operator += to concatenate the following items: 
+        # + Each list "element" (starting at index position [1:]), 
+        # + a dash "-", 
+        # + append the first character of the "element" (using the index 
+        # [0]) to the end of the "element", and finally,
+        # + a space " " to separate each "element" in the "new_string".
+        new_string += element[1:] + "-"  + element[0] + " "
+
+    # Return the list that has been converted back into a string.
+    return new_string
+
+
+print(change_string("1one 2two 3three 4four 5five")) 
+# Should print "one-1 two-2 three-3 four-4 five-5"  
