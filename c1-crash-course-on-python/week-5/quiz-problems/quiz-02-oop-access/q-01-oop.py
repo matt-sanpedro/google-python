@@ -21,7 +21,7 @@ class Server:
     def add_connection(self, connection_id):
         """Adds a new connection to this server."""
         connection_load = random.random()*10+1
-        print('New connection load: ', connection_load)
+        # print('New connection load: ', connection_load)
         # Add the connection to the dictionary with the calculated load
         self.connections[connection_id] = connection_load
 
@@ -42,19 +42,19 @@ class Server:
             total += 1
         return total
 
-    # def __str__(self):
-    #     """Returns a string with the current load of the server"""
-    #     return "{:.2f}%".format(self.load())
+    def __str__(self):
+        """Returns a string with the current load of the server"""
+        return "{:.2f}%".format(self.load())
     
 #End Portion 1#
 
-server = Server()
-server.add_connection("192.168.1.1")
-print(server.load())
+# server = Server()
+# server.add_connection("192.168.1.1")
+# print(server.load())
 
-server.close_connection("192.168.1.1")
-# server.close_connection("192.168.1.0")
-print(server.load())
+# server.close_connection("192.168.1.1")
+# # server.close_connection("192.168.1.0")
+# print(server.load())
 
 
 #Begin Portion 2#
@@ -62,11 +62,25 @@ class LoadBalancing:
     def __init__(self):
         """Initialize the load balancing system with one server"""
         self.connections = {}
-        self.servers = [Server()]
+        self.servers = []
+
+        conn_id = self.generate_conn_id()
+        # print('connection id: {}'.format(conn_id))
+        self.add_connection(conn_id)
+
+    def generate_conn_id(self):
+        """Generates a connection id in the following format: xxxx:xxxx:xxxx"""
+        return self.generate_random_alphanumeric(4) + ':' + self.generate_random_alphanumeric(4) + ':' + self.generate_random_alphanumeric(4)
+
+    def generate_random_alphanumeric(self, length):
+        """Generates a random alphanumeric string of designated length"""
+        return ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(length))
 
     def add_connection(self, connection_id):
         """Randomly selects a server and adds a connection to it."""
-        server = random.choice(self.servers)
+        # server = random.choice(self.servers)
+        server = Server()
+
         # Add the connection to the dictionary with the selected server
         server.add_connection(connection_id)
         self.connections[connection_id] = server
@@ -85,11 +99,14 @@ class LoadBalancing:
         """Calculates the average load of all servers"""
         # Sum the load of each server and divide by the amount of servers
         total = 0
+        # print('Length: ', len(self.servers))
         for server in self.servers:
-            print('Value: ', server.connections)
-            # for conn in server.connections.values():
-            #     print('Server: ', conn)
-        return 0
+            print('Server connections: ', server.connections)
+            # print('Value: ', server.connections)
+            for load in server.connections.values():
+                # print('Server: ', conn)
+                total += load
+        return total/len(self.servers)
 
     def ensure_availability(self):
         """If the average load is higher than 50, spin up a new server"""
@@ -102,5 +119,5 @@ class LoadBalancing:
 #End Portion 2#
 
 l = LoadBalancing()
-l.add_connection("fdca:83d2::f20d")
+l.add_connection("fdca:83d2:f20d")
 print(l.avg_load())
