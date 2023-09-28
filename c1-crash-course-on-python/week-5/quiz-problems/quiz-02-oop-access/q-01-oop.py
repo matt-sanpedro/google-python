@@ -34,17 +34,17 @@ class Server:
         else:
             return None
 
-    def load(self):
-        """Calculates the current load for all connections."""
-        total = 0
-        # Add up the load for each of the connections
-        for _ in self.connections.values():
-            total += 1
-        return total
+    # def load(self):
+    #     """Calculates the current load for all connections."""
+    #     total = 0
+    #     # Add up the load for each of the connections
+    #     for _ in self.connections.values():
+    #         total += 1
+    #     return total
 
-    def __str__(self):
-        """Returns a string with the current load of the server"""
-        return "{:.2f}%".format(self.load())
+    # def __str__(self):
+    #     """Returns a string with the current load of the server"""
+    #     return "{:.2f}%".format(self.load())
     
 #End Portion 1#
 
@@ -62,7 +62,7 @@ class LoadBalancing:
     def __init__(self):
         """Initialize the load balancing system with one server"""
         self.connections = {}
-        self.servers = []
+        self.servers = {}
 
         conn_id = self.generate_conn_id()
         # print('connection id: {}'.format(conn_id))
@@ -85,7 +85,7 @@ class LoadBalancing:
         server.add_connection(connection_id)
         self.connections[connection_id] = server
         # Add the connection to the server
-        self.servers.append(server)
+        self.servers[connection_id] = server
 
     def close_connection(self, connection_id):
         """Closes the connection on the the server corresponding to connection_id."""
@@ -101,11 +101,13 @@ class LoadBalancing:
         total = 0
         # print('Length: ', len(self.servers))
         for server in self.servers:
-            print('Server connections: ', server.connections)
+            # print('Server Load: ', self.servers[server].connections.values())
             # print('Value: ', server.connections)
-            for load in server.connections.values():
-                # print('Server: ', conn)
+            for load in self.servers[server].connections.values():
+                print('Server: ', load)
                 total += load
+        
+        # print(self.servers)
         return total/len(self.servers)
 
     def ensure_availability(self):
@@ -120,4 +122,7 @@ class LoadBalancing:
 
 l = LoadBalancing()
 l.add_connection("fdca:83d2:f20d")
+print(l.avg_load())
+
+l.close_connection("fdca:83d2:f20d")
 print(l.avg_load())
